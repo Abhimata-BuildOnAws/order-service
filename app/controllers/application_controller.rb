@@ -5,6 +5,5 @@ class ApplicationController < ActionController::Base
 
   def current_user(params)
     User.find(params[:user_id]) || Restaurant.find(params[:user_id])
-    
   end
 end
