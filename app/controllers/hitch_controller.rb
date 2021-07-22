@@ -18,7 +18,7 @@ class HitchController < ApplicationController
 
   # Get all hitches that are active
   def get_all
-    hitches = ::Hitch.all1
+    hitches = ::Hitch.all
 
     serializer = HitchSerializer.new(hitches, { params: {coordinates: params['coordinates']} })
     render json: serializer.serializable_hash
