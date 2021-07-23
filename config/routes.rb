@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   post 'auth/sign_up', to: 'auth#sign_up'
 
   # User
+  post 'user/create', to: 'user#create'
   post 'user/update_location', to: 'user#update_location'
 
   # MenuItem
