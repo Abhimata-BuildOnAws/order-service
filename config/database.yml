@@ -5,20 +5,20 @@ default: &default
   timeout: 5000
   username: <%= ENV['RDS_USER'] %>
   password: <%= ENV['RDS_PASSWORD'] %>
-  host: <%= ENV['RDS_ENDPOINT'] %>
+  host: <%= ENV['RDS_ORDER_DATABASE'] %>
   port: 5432
 
 development:
   <<: *default
-  database: tumpang_development
+  database: tumpang_development_order
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: tumpang_test
+  database: tumpang_test_order
 
 production:
   <<: *default
-  database: tumpang_production
+  database: tumpang_production_order

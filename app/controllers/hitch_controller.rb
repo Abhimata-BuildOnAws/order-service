@@ -7,7 +7,7 @@ class HitchController < ApplicationController
     hitch = Hitch.create(
       submit_time: params[:submit_time],
       pickup: params[:pickup],
-      user: current_user(nil),
+      user: current_user(params[:user_id]),
       restaurant_id: params[:restaurant_id]
     )
 
@@ -20,7 +20,7 @@ class HitchController < ApplicationController
   def get_all
     hitches = ::Hitch.all
 
-    serializer = HitchSerializer.new(hitches, { params: { current_user: current_user(params) } })
+    serializer = HitchSerializer.new(hitches, { params: {coordinates: params['coordinates']} })
     render json: serializer.serializable_hash
   end
 

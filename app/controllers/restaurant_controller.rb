@@ -1,10 +1,15 @@
-# frozen_string_literal: true
-
 class RestaurantController < ApplicationController
-  def browse
-    restaurant = ::Restaurant.all
+  def create
+    restaurant = Restaurant.create(
+      name: params[:name],
+      street: params[:address],
+      stripe_id: params[:stripe_id],
+      state: params[:state],
+      country: params[:country],
+      latitude: params[:latitude],
+      longitude: params[:longitude]
+    )
 
-    serializer = RestaurantSerializer.new(restaurant, { params: { current_user: current_user(params) } })
-    render json: serializer.serializable_hash
+    render json: {restaurant: restaurant}, status: 200
   end
 end

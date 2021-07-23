@@ -3,19 +3,13 @@
 Rails.application.routes.draw do
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   # Restaurant
-  post '/restaurant/browse', to: 'restaurant#browse'
-
-  # Payment
-  post '/payment/payment_intent', to: 'payment#payment_intent'
-
-  # Cognito
-  post 'auth/sign_up', to: 'auth#sign_up'
+  post '/restaurant/create', to: 'restaurant#create'
 
   # User
-  post 'user/update_location', to: 'user#update_location'
+  post 'user/create', to: 'user#create'
 
   # MenuItem
-  post 'menu_item/items_by_restaurant', to: 'menu_item#items_by_restaurant'
+  post 'menu_item/create', to: 'menu_item#create'
 
   # Order
   post 'order', to: 'order#create'
