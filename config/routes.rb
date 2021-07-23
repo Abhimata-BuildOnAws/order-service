@@ -15,7 +15,7 @@ Rails.application.routes.draw do
   post 'user/create', to: 'user#create'
 
   # MenuItem
-  post 'menu_item/items_by_restaurant', to: 'menu_item#items_by_restaurant'
+  post 'menu_item/create', to: 'menu_item#create'
 
   # Order
   post 'order', to: 'order#create'
