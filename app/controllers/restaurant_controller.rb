@@ -1,8 +1,9 @@
 class RestaurantController < ApplicationController
   def create
     restaurant = Restaurant.create(
+      id: params[:id],
       name: params[:name],
-      street: params[:address],
+      street: params[:street],
       stripe_id: params[:stripe_id],
       state: params[:state],
       country: params[:country],
