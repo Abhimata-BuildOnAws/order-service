@@ -5,12 +5,6 @@ Rails.application.routes.draw do
   # Restaurant
   post '/restaurant/create', to: 'restaurant#create'
 
-  # Payment
-  post '/payment/payment_intent', to: 'payment#payment_intent'
-
-  # Cognito
-  post 'auth/sign_up', to: 'auth#sign_up'
-
   # User
   post 'user/create', to: 'user#create'
 
