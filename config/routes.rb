@@ -3,7 +3,7 @@
 Rails.application.routes.draw do
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   # Restaurant
-  post '/restaurant/browse', to: 'restaurant#browse'
+  post '/restaurant/create', to: 'restaurant#create'
 
   # Payment
   post '/payment/payment_intent', to: 'payment#payment_intent'
@@ -13,7 +13,6 @@ Rails.application.routes.draw do
 
   # User
   post 'user/create', to: 'user#create'
-  post 'user/update_location', to: 'user#update_location'
 
   # MenuItem
   post 'menu_item/items_by_restaurant', to: 'menu_item#items_by_restaurant'
