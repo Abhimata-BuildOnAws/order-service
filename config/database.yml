@@ -5,7 +5,7 @@ default: &default
   timeout: 5000
   username: <%= ENV['RDS_USER'] %>
   password: <%= ENV['RDS_PASSWORD'] %>
-  host: <%= ENV['RDS_ORDER_DATABASE'] %>
+  host: <%= ENV['RDS_ENDPOINT'] %>
   port: 5432
 
 development:
