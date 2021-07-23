@@ -20,7 +20,7 @@ class Hitch < ApplicationRecord
     end
   end
 
-  def coordinates
+  def ors_coordinates
     [longitude, latitude]
   end
 
@@ -34,6 +34,6 @@ class Hitch < ApplicationRecord
   end
 
   def calculate_travel_distance(mode_of_transport)
-    OpenRoutesService.get_travel_distance(mode_of_transport, restaurant.coordinates, coordinates)
+    OpenRoutesService.get_travel_distance(mode_of_transport, restaurant.ors_coordinates, self.ors_coordinates)
   end
 end
