@@ -1,13 +1,13 @@
 class MenuItemController < ApplicationController
   def create
-    menu_item = MenuItem.find(params[:id])
-    if menu_item.exists?
+    begin
+      menu_item = MenuItem.find(params[:id])
       menu_item.update(
         restaurant_id: params[:restaurant_id], 
         name: params[:name], 
         price: params[:price]
       )
-    else
+    rescue => e
       menu_item = MenuItem.create(
         id: params[:id],
         restaurant_id: params[:restaurant_id], 

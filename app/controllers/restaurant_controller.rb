@@ -1,7 +1,7 @@
 class RestaurantController < ApplicationController
   def create
-    restaurant = Restaurant.find(params[:id])
-    if restaurant.exists?
+    begin
+      restaurant = Restaurant.find(params[:id])
       restaurant.update(
         name: params[:name],
         street: params[:street],
@@ -11,7 +11,7 @@ class RestaurantController < ApplicationController
         latitude: params[:latitude],
         longitude: params[:longitude]
       )
-    else
+    rescue => e
       restaurant = Restaurant.create(
         id: params[:id],
         name: params[:name],
