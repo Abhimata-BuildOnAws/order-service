@@ -34,6 +34,6 @@ class HitchSerializer
   # if effective_pollution > 700, minus points
   # if < 700, plus points
   attribute :tree_point do |hitch|
-    (hitch.each_pollution - 700) * -1
+    hitch.tree_points
   end
 end
