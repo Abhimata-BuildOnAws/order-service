@@ -7,11 +7,11 @@ class HitchController < ApplicationController
     hitch = Hitch.create(
       submit_time: params[:submit_time],
       pickup: params[:pickup],
-      user: current_user(params[:user_id]),
+      user_id: params[:user_id],
       restaurant_id: params[:restaurant_id]
     )
 
-    serializer = HitchSerializer.new(hitch, { params: { current_user: current_user(params) } })
+    serializer = HitchSerializer.new(hitch, { params: { latitude: params[:latitude], longitude: params[:longitude]} })
 
     render json: serializer.serializable_hash
   end

@@ -5,7 +5,7 @@ class OrderController < ApplicationController
 
   # Create new order
   def create
-    new_order = Order.create(user: current_user(nil))
+    new_order = Order.create(user_id: params[:user_id])
     orders = JSON.parse(request.body.read)['order']
     hitch_id = JSON.parse(request.body.read)['hitch_id']
 
