@@ -7,14 +7,14 @@ class Hitch < ApplicationRecord
 
   geocoded_by :pickup
 
-  after_create :calculate_pollution
+  after_validation :calculate_pollution
   after_validation :geocode
 
   # Calculate pollution each customer emitted if they were to hitch on a deliver
   # WIP : change 100 to pollution index
   def each_pollution
     if orders.count.zero?
-      total_pollution
+      self.total_pollution
     else
       total_pollution / orders.count
     end
@@ -28,12 +28,15 @@ class Hitch < ApplicationRecord
 
   def calculate_pollution
     travel_distance = calculate_travel_distance('driving-car')
+
     # WIP : Average grams of carbon emitted per kilometer is 250g
     pollution = travel_distance * 250 / 1000
-    update(total_pollution: pollution)
+    update_attribute(:total_pollution, pollution)
   end
 
   def calculate_travel_distance(mode_of_transport)
-    OpenRoutesService.get_travel_distance(mode_of_transport, restaurant.ors_coordinates, self.ors_coordinates)
+    travel_distance = OpenRoutesService.get_travel_distance(mode_of_transport, restaurant.ors_coordinates, [longitude, latitude])
+    update_attribute(:travel_distance, travel_distance)
+    return travel_distance
   end
 end
