@@ -5,13 +5,14 @@ class OrderController < ApplicationController
 
   # Create new order
   def create
-    new_order = Order.create(user_id: params[:user_id])
-    orders = JSON.parse(request.body.read)['order']
-    hitch_id = JSON.parse(request.body.read)['hitch_id']
-
+    json = JSON.parse(request.body.read)
+    new_order = Order.create(user_id: json["user_id"])
+    
+    orders = json['order']
+    hitch_id = json['hitch_id']
     new_order.update(hitch_id: hitch_id)
+    
     total_price = 0
-
     orders.each do |o|
       menu_item = MenuItem.find(o['menu_item_id'])
       quantity = o['quantity']
@@ -21,12 +22,12 @@ class OrderController < ApplicationController
 
       total_price += quantity * menu_item.price
     end
-
     new_order.update(total_price: total_price)
 
-    pollution = 100
-    pollution = new_order.hitch.each_pollution if new_order.hitch_id.present?
+    pollution = new_order.hitch.each_pollution
+    Order.where(hitch_id: new_order.hitch_id).update_all(pollution: pollution)
 
-    render json: { order: new_order, pollution: pollution }, status: 200
+    return_order = Order.find_by(id: new_order.id)
+    render json: { order: return_order }, status: 200
   end
 end
