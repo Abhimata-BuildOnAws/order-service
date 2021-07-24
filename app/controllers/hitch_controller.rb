@@ -7,11 +7,13 @@ class HitchController < ApplicationController
     hitch = Hitch.create(
       submit_time: params[:submit_time],
       pickup: params[:pickup],
+      longitude: params[:longitude],
+      latitude: params[:latitude],
       user_id: params[:user_id],
       restaurant_id: params[:restaurant_id]
     )
 
-    serializer = HitchSerializer.new(hitch, { params: { latitude: params[:latitude], longitude: params[:longitude]} })
+    serializer = HitchSerializer.new(hitch, { params: { user_latitude: params[:user_latitude], user_longitude: params[:user_longitude] } })
 
     render json: serializer.serializable_hash
   end
@@ -20,7 +22,7 @@ class HitchController < ApplicationController
   def get_all
     hitches = ::Hitch.all
 
-    serializer = HitchSerializer.new(hitches, { params: {coordinates: params['coordinates']} })
+    serializer = HitchSerializer.new(hitches, { params: { user_latitude: params[:user_latitude], user_longitude: params[:user_longitude] } })
     render json: serializer.serializable_hash
   end
 
