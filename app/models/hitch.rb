@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+require 'rufus-scheduler'
 
 class Hitch < ApplicationRecord
   has_many :orders
@@ -8,6 +9,7 @@ class Hitch < ApplicationRecord
   geocoded_by :pickup
 
   after_validation :calculate_pollution
+  after_validation :schedule_submit
   after_validation :geocode
 
   # Calculate pollution each customer emitted if they were to hitch on a deliver
@@ -20,11 +22,25 @@ class Hitch < ApplicationRecord
     end
   end
 
+  def tree_points
+    ((each_pollution - 700) * -1).to_i
+  end
+
   def ors_coordinates
     [longitude, latitude]
   end
 
   private
+  def schedule_submit
+    scheduler = Rufus::Scheduler.new
+
+    scheduler.at submit_time do
+      self.orders.each do |order|
+        update_user_pollution(order.user.id, each_pollution)
+        update_user_tree_points(order.user.id, tree_points)
+      end
+    end
+  end
 
   def calculate_pollution
     travel_distance = calculate_travel_distance('driving-car')
@@ -38,5 +54,59 @@ class Hitch < ApplicationRecord
     travel_distance = OpenRoutesService.get_travel_distance(mode_of_transport, restaurant.ors_coordinates, [longitude, latitude])
     update_attribute(:travel_distance, travel_distance)
     return travel_distance
+  end
+
+  def update_user_pollution(user_id, pollution)
+    # user_service_ip = ServiceDiscovery.user_service_ip
+    # Public IP
+    # order_service_ip = "172.31.18.200"
+    # url = "http://" + user_service_ip + ":3000/user/update_pollution"
+
+    url = "https://fevu7x9mx0.execute-api.ap-southeast-1.amazonaws.com/RX/user/update_pollution"
+
+    headers = { "Content-Type": "application/json; charset=utf-8" }
+
+    conn = Faraday.new(
+      url: url,
+      headers: headers
+    )
+
+    values = {
+      "user_id": user_id,
+      "pollution": pollution
+    }
+    
+    response = conn.post do |req|
+      req.body = values.to_json
+      puts req
+    end
+
+  end
+
+  def update_user_tree_points(user_id, tree_points)
+    # user_service_ip = ServiceDiscovery.user_service_ip
+    # Public IP
+    # order_service_ip = "172.31.18.200"
+    # url = "http://" + user_service_ip + ":3000/user/update_pollution"
+
+    url = "https://fevu7x9mx0.execute-api.ap-southeast-1.amazonaws.com/RX/user/update_tree_points"
+
+    headers = { "Content-Type": "application/json; charset=utf-8" }
+
+    conn = Faraday.new(
+      url: url,
+      headers: headers
+    )
+
+    values = {
+      "user_id": user_id,
+      "tree_points": tree_points
+    }
+    
+    response = conn.post do |req|
+      req.body = values.to_json
+      puts req
+    end
+
   end
 end
