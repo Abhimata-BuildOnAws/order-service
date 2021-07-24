@@ -6,7 +6,6 @@ class Restaurant < User
   self.table_name = 'restaurants'
   geocoded_by :address
 
-
   # Relationships
   has_many :menu_items
 
