@@ -57,12 +57,12 @@ class Hitch < ApplicationRecord
   end
 
   def update_user_pollution(user_id, pollution)
-    # user_service_ip = ServiceDiscovery.user_service_ip
+    user_service_ip = ServiceDiscovery.user_service_ip
     # Public IP
     # order_service_ip = "172.31.18.200"
-    # url = "http://" + user_service_ip + ":3000/user/update_pollution"
+    url = "http://" + user_service_ip + ":3000/user/update_pollution"
 
-    url = "https://fevu7x9mx0.execute-api.ap-southeast-1.amazonaws.com/RX/user/update_pollution"
+    # url = "https://fevu7x9mx0.execute-api.ap-southeast-1.amazonaws.com/RX/user/update_pollution"
 
     headers = { "Content-Type": "application/json; charset=utf-8" }
 
@@ -84,12 +84,12 @@ class Hitch < ApplicationRecord
   end
 
   def update_user_tree_points(user_id, tree_points)
-    # user_service_ip = ServiceDiscovery.user_service_ip
+    user_service_ip = ServiceDiscovery.user_service_ip
     # Public IP
     # order_service_ip = "172.31.18.200"
-    # url = "http://" + user_service_ip + ":3000/user/update_pollution"
+    url = "http://" + user_service_ip + ":3000/user/update_pollution"
 
-    url = "https://fevu7x9mx0.execute-api.ap-southeast-1.amazonaws.com/RX/user/update_tree_points"
+    # url = "https://fevu7x9mx0.execute-api.ap-southeast-1.amazonaws.com/RX/user/update_tree_points"
 
     headers = { "Content-Type": "application/json; charset=utf-8" }
 
