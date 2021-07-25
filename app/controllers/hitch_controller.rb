@@ -10,7 +10,8 @@ class HitchController < ApplicationController
       longitude: params[:longitude],
       latitude: params[:latitude],
       user_id: params[:user_id],
-      restaurant_id: params[:restaurant_id]
+      restaurant_id: params[:restaurant_id],
+      description: params[:description]
     )
 
     serializer = HitchSerializer.new(hitch, { params: { user_latitude: params[:user_latitude], user_longitude: params[:user_longitude] } })
