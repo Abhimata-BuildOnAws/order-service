@@ -13,7 +13,6 @@ class Hitch < ApplicationRecord
   after_validation :geocode
 
   # Calculate pollution each customer emitted if they were to hitch on a deliver
-  # WIP : change 100 to pollution index
   def each_pollution
     if orders.count.zero?
       self.total_pollution
@@ -62,8 +61,6 @@ class Hitch < ApplicationRecord
     # order_service_ip = "172.31.18.200"
     url = "http://" + user_service_ip + ":3000/user/update_pollution"
 
-    # url = "https://fevu7x9mx0.execute-api.ap-southeast-1.amazonaws.com/RX/user/update_pollution"
-
     headers = { "Content-Type": "application/json; charset=utf-8" }
 
     conn = Faraday.new(
@@ -88,8 +85,6 @@ class Hitch < ApplicationRecord
     # Public IP
     # order_service_ip = "172.31.18.200"
     url = "http://" + user_service_ip + ":3000/user/update_pollution"
-
-    # url = "https://fevu7x9mx0.execute-api.ap-southeast-1.amazonaws.com/RX/user/update_tree_points"
 
     headers = { "Content-Type": "application/json; charset=utf-8" }
 
