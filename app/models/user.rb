@@ -6,7 +6,7 @@ class User < ApplicationRecord
   has_many :hitches
 
   # Geocoding
-  geocoded_by :address
+  # geocoded_by :address
 
   # Validations
   validates :id, uniqueness: true
