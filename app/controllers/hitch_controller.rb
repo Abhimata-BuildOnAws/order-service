@@ -20,12 +20,19 @@ class HitchController < ApplicationController
 
   # Get all hitches that are active
   def get_all
-    hitches = ::Hitch.where("submit_time > now() ")
+    hitches = ::Hitch.where("submit_time > now()")
 
     serializer = HitchSerializer.new(hitches, { params: { user_latitude: params[:user_latitude], user_longitude: params[:user_longitude] } })
     render json: serializer.serializable_hash
   end
 
+  # Get active hitches within 5km
+  def nearby
+    hitches = ::Hitch.where("submit_time > now() ").near([params[:user_latitude],params[:user_longitude]], 5)
+    serializer = HitchSerializer.new(hitches, { params: { user_latitude: params[:user_latitude], user_longitude: params[:user_longitude] } })
+    render json: serializer.serializable_hash
+  end
+  
   private
 
   # Retrieve current location of user

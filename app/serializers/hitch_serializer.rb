@@ -3,11 +3,16 @@
 class HitchSerializer
   include JSONAPI::Serializer
 
-  attributes :pickup, :total_pollution, :description
+  attributes :pickup, :total_pollution, :description, :restaurant_id
+
+  # Returns the name of the restaurant
+  attribute :restaurant_name do |hitch|
+    hitch.restaurant.name
+  end
 
   # Returns a straight distance (not accounting route distance) from restaurant to the user in metres
   attribute :absolute_distance do |hitch, params|
-    hitch.distance_to([params[:user_longitude], params[:user_longitude]])
+    hitch.distance_to([params[:user_latitude], params[:user_longitude]]) * 1000
   end
 
   # Returns the route distance from restaurant to the user in metres
@@ -21,6 +26,7 @@ class HitchSerializer
   attribute :effective_pollution do |hitch|
     @effective_pollution = hitch.each_pollution
   end
+
 
   def self.get_distance(obj)
     obj.travel_distance

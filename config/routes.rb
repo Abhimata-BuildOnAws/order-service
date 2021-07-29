@@ -22,5 +22,6 @@ Rails.application.routes.draw do
   # Tumpang
   post '/tumpang', to: 'hitch#create'
   post '/tumpang/browse', to: 'hitch#get_all'
+  post '/tumpang/nearby', to: 'hitch#nearby'
   post '/tumpang/add_order', to: 'hitch#add_order'
 end
