@@ -3,26 +3,19 @@ class RestaurantController < ApplicationController
     begin
       restaurant = Restaurant.find(params[:id])
       restaurant.update(
-        name: params[:name],
-        street: params[:street],
-        stripe_id: params[:stripe_id],
-        state: params[:state],
-        country: params[:country],
-        latitude: params[:latitude],
-        longitude: params[:longitude]
+        restaurant_params
       )
     rescue => e
+
       restaurant = Restaurant.create(
-        id: params[:id],
-        name: params[:name],
-        street: params[:street],
-        stripe_id: params[:stripe_id],
-        state: params[:state],
-        country: params[:country],
-        latitude: params[:latitude],
-        longitude: params[:longitude]
+        restaurant_params
       )
     end
     render json: {restaurant: restaurant}, status: 200
+  end
+
+  private
+  def restaurant_params
+    params.require(:restaurant).permit(:id, :name, :street, :stripe_id, :state, :country, :latitude, :longitude).select { |k,v| !v.blank?}
   end
 end

@@ -1,9 +1,12 @@
 # frozen_string_literal: true
 
-class Restaurant < User
+class Restaurant < ApplicationRecord
   # attr_accessor :id, :name, :street, :state, :country, :contact_no, :stripe_id, :latitude, :longitude
 
-  self.table_name = 'restaurants'
+  # Relationships
+  has_many :orders
+  has_many :hitches
+
   geocoded_by :address
 
   # Relationships
