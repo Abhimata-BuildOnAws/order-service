@@ -6,9 +6,9 @@ class Hitch < ApplicationRecord
   belongs_to :user
   belongs_to :restaurant
 
-  geocoded_by :pickup
+  reverse_geocoded_by :latitude, :longitude, address: :pickup
 
-  after_validation :geocode
+  after_validation :reverse_geocode
   after_validation :calculate_pollution
   after_validation :schedule_submit
   
