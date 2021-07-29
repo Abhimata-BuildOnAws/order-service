@@ -8,9 +8,10 @@ class Hitch < ApplicationRecord
 
   geocoded_by :pickup
 
+  after_validation :geocode
   after_validation :calculate_pollution
   after_validation :schedule_submit
-  after_validation :geocode
+  
 
   # Calculate pollution each customer emitted if they were to hitch on a deliver
   def each_pollution

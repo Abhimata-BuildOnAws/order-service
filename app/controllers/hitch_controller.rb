@@ -7,8 +7,6 @@ class HitchController < ApplicationController
     hitch = Hitch.create(
       submit_time: params[:submit_time],
       pickup: params[:pickup],
-      longitude: params[:longitude],
-      latitude: params[:latitude],
       user_id: params[:user_id],
       restaurant_id: params[:restaurant_id],
       description: params[:description]
