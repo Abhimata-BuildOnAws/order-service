@@ -129,6 +129,6 @@ class Hitch < ApplicationRecord
         req.body = values.to_json
         puts req
       end
-
+    end
   end
 end

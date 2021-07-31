@@ -15,6 +15,7 @@ class RestaurantController < ApplicationController
   end
 
   private
+  
   def restaurant_params
     params.require(:restaurant).permit(:id, :name, :street, :stripe_id, :state, :country, :latitude, :longitude).select { |k,v| !v.blank?}
   end
