@@ -36,8 +36,9 @@ class Hitch < ApplicationRecord
 
     scheduler.at submit_time do
       self.orders.each do |order|
-        update_user_pollution(order.user.id, each_pollution)
-        update_user_tree_points(order.user.id, tree_points)
+        # update_user_pollution(order.user.id, each_pollution)
+        # update_user_tree_points(order.user.id, tree_points)
+        update_user_environmental_contribution(order.user_id, tree_points, each_pollution, (total_pollution - each_pollution))
       end
     end
   end
@@ -103,6 +104,31 @@ class Hitch < ApplicationRecord
       req.body = values.to_json
       puts req
     end
+
+    def update_user_environmental_contribution(user_id, tree_points, pollution, carbon_saved)
+      user_service_ip = ServiceDiscovery.user_service_ip
+      # Public IP
+      # order_service_ip = "172.31.18.200"
+      url = "http://" + user_service_ip + ":3000/user/update_environmental_contribution"
+  
+      headers = { "Content-Type": "application/json; charset=utf-8" }
+  
+      conn = Faraday.new(
+        url: url,
+        headers: headers
+      )
+  
+      values = {
+        "user_id": user_id,
+        "tree_points": tree_points,
+        "pollution": pollution,
+        "carbon_saved": carbon_saved
+      }
+      
+      response = conn.post do |req|
+        req.body = values.to_json
+        puts req
+      end
 
   end
 end

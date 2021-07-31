@@ -42,4 +42,8 @@ class HitchSerializer
   attribute :tree_point do |hitch|
     hitch.tree_points
   end
+
+  attribute :discount do |hitch|
+    hitch.orders.count
+  end
 end
