@@ -11,7 +11,6 @@ class Hitch < ApplicationRecord
   after_validation :reverse_geocode
   after_validation :calculate_pollution
   after_validation :schedule_submit
-  
 
   # Calculate pollution each customer emitted if they were to hitch on a deliver
   def each_pollution

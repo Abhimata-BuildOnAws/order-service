@@ -20,7 +20,7 @@ class HitchController < ApplicationController
 
   # Get all hitches that are active
   def get_all
-    hitches = ::Hitch.where("submit_time > now()")
+    hitches = ::Hitch.where("submit_time > now()").near([params[:user_latitude],params[:user_longitude]], 20)
 
     serializer = HitchSerializer.new(hitches, { params: { user_latitude: params[:user_latitude], user_longitude: params[:user_longitude] } })
     render json: serializer.serializable_hash
@@ -28,11 +28,17 @@ class HitchController < ApplicationController
 
   # Get active hitches within 5km
   def nearby
-    hitches = ::Hitch.where("submit_time > now() ").near([params[:user_latitude],params[:user_longitude]], 5)
+    hitches = ::Hitch.where("submit_time > now() ").near([params[:user_latitude],params[:user_longitude]], 2)
     serializer = HitchSerializer.new(hitches, { params: { user_latitude: params[:user_latitude], user_longitude: params[:user_longitude] } })
     render json: serializer.serializable_hash
   end
-  
+
+  # Get active hitches for the same restaurant
+  def nearby_hitches_for_restaurant
+    hitches = ::Hitch.where("submit_time > now() ", restaurant_id: params[:restaurant_id]).near([params[:user_latitude],params[:user_longitude]], 2)
+    serializer = HitchSerializer.new(hitches, { params: { user_latitude: params[:user_latitude], user_longitude: params[:user_longitude] } })
+    render json: serializer.serializable_hash
+  end
   private
 
   # Retrieve current location of user
