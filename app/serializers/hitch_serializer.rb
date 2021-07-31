@@ -3,7 +3,7 @@
 class HitchSerializer
   include JSONAPI::Serializer
 
-  attributes :pickup, :total_pollution, :description, :restaurant_id
+  attributes :pickup, :total_pollution, :description, :restaurant_id, :submit_time
 
   # Returns the name of the restaurant
   attribute :restaurant_name do |hitch|
@@ -44,6 +44,10 @@ class HitchSerializer
   end
 
   attribute :discount do |hitch|
+    hitch.orders.count
+  end
+
+  attribute :number_of_orders do |hitch|
     hitch.orders.count
   end
 end
