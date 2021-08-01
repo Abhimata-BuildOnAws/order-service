@@ -18,6 +18,7 @@ Rails.application.routes.draw do
   post 'order', to: 'order#create'
   get 'order/directions', to: 'order#directions'
   get 'order/distance', to: 'order#distance'
+  post 'order/history', to: 'order#history'
 
   # Tumpang
   post '/tumpang', to: 'hitch#create'
