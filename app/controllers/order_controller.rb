@@ -30,4 +30,15 @@ class OrderController < ApplicationController
     return_order = Order.find_by(id: new_order.id)
     render json: { order: return_order }, status: 200
   end
+
+  def history
+    user_id = params[:user_id]
+    
+    begin
+      user = User.find_by(id: user_id)
+    rescue 
+      render json: { error: "User not found" }, status: 400
+      return
+    end
+  end
 end
