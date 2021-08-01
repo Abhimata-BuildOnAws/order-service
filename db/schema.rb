@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_25_075734) do
+ActiveRecord::Schema.define(version: 2021_08_01_074204) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -29,6 +29,7 @@ ActiveRecord::Schema.define(version: 2021_07_25_075734) do
     t.uuid "restaurant_id"
     t.integer "travel_distance"
     t.text "description"
+    t.boolean "shared?"
     t.index ["restaurant_id"], name: "index_hitches_on_restaurant_id"
     t.index ["user_id"], name: "index_hitches_on_user_id"
   end
