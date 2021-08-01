@@ -33,7 +33,9 @@ class OrderController < ApplicationController
 
   def history
     user_id = params[:user_id]
-    
+    start_date = DateTime.iso8601(params[:start_date])
+    end_date = DateTime.iso8601(params[:end_date])
+
     begin
       user = User.find_by(id: user_id)
     rescue 
@@ -41,7 +43,7 @@ class OrderController < ApplicationController
       return
     end 
 
-    orders = Order.where(user: user)
+    orders = Order.where(user: user, created_at: start_date..end_date)
 
     render json: { orders: orders }, status: 200
   end
