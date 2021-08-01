@@ -39,6 +39,10 @@ class OrderController < ApplicationController
     rescue 
       render json: { error: "User not found" }, status: 400
       return
-    end
+    end 
+
+    orders = Order.where(user: user)
+
+    render json: { orders: orders }, status: 200
   end
 end
