@@ -27,6 +27,18 @@ class HitchController < ApplicationController
     render json: serializer.serializable_hash
   end
 
+  def history_by_month_range
+    month_range = params[:month_range].to_i
+    user_id = params[:user_id]
+
+    from_time = month_range.months.ago
+    to_time = Time.now
+
+    hitches = Hitch.joins(:orders).where(orders: {user_id: user_id, created_at: from_time..to_time})
+    serializer = HitchSerializer.new(hitches, { params: { user_latitude: params[:user_latitude], user_longitude: params[:user_longitude] } })
+    render json: serializer.serializable_hash
+  end
+
   # Get active hitches within 5km
   def nearby
     hitches = ::Hitch.where(shared?: true).where("submit_time > now()").near([params[:user_latitude],params[:user_longitude]], 2)
@@ -40,6 +52,7 @@ class HitchController < ApplicationController
     serializer = HitchSerializer.new(hitches, { params: { user_latitude: params[:user_latitude], user_longitude: params[:user_longitude] } })
     render json: serializer.serializable_hash
   end
+
   private
 
   # Retrieve current location of user

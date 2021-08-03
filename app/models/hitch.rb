@@ -29,6 +29,10 @@ class Hitch < ApplicationRecord
     [longitude, latitude]
   end
 
+  def pollution_saved
+    self.total_pollution - each_pollution
+  end
+
   private
   def schedule_submit
     scheduler = Rufus::Scheduler.new

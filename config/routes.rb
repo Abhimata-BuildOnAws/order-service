@@ -26,4 +26,8 @@ Rails.application.routes.draw do
   post '/tumpang/nearby', to: 'hitch#nearby'
   post '/tumpang/nearby_hitches_for_restaurant', to: 'hitch#nearby_hitches_for_restaurant'
   post '/tumpang/add_order', to: 'hitch#add_order'
+  post '/tumpang/history/month_range', to: 'hitch#history_by_month_range'
+
+  # Emission
+  post '/tumpang/emission_history', to: 'emission#emission_history' 
 end
