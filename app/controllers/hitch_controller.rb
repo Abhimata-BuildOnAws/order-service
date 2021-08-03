@@ -51,6 +51,23 @@ class HitchController < ApplicationController
     serializer = HitchSerializer.new(hitches, { params: { user_latitude: params[:user_latitude], user_longitude: params[:user_longitude] } })
     render json: serializer.serializable_hash
   end
+
+  def emission_record_by_month_record
+    month_range = params[:month_range].to_i
+    user_id = params[:user_id]
+
+    dates = generate_dates(month_range)
+
+    monthly_emissions = []
+    (dates).each do |date|
+      monthly = monthly_emission(date, user_id)
+      monthly_emissions.append(monthly)
+    end
+
+    serializer = EmissionRecordSerializer.new(monthly_emissions)
+
+    render json: { user_id: user_id, monthly_emissions: serializer.serializable_hash }, status: 200
+  end
   private
 
   # Retrieve current location of user
@@ -58,5 +75,42 @@ class HitchController < ApplicationController
     ip = request.remote_ip
     results = Geocoder.search(ip)
     results.first.address
+  end
+
+  def monthly_emission(date, user_id)
+    hitches = Hitch.where(user_id: user_id).where('extract(month from created_at) = ?', date.month)
+
+    emission_record = EmissionRecord.new()
+    emission_record.month = date.strftime("%B")
+
+    return emission_record if hitches.empty?
+
+    emission_record.carbon_emission = hitches.sum(:total_pollution)
+
+    carbon_saved = 0
+    effective_pollution = 0
+
+    hitches.each do |hitch|
+      carbon_saved += hitch.pollution_saved
+      effective_pollution += hitch.each_pollution
+    end
+
+    emission_record.carbon_emission_saved = carbon_saved
+    emission_record.effective_carbon_emission = effective_pollution
+    emission_record.number_of_tumpang = hitches.count
+    emission_record.average_carbon_emission = effective_pollution / hitches.count
+
+
+    return emission_record
+  end
+
+  def generate_dates(month_range)
+    dates = []
+
+    (0..month_range).each do |n|
+      dates.append(n.months.ago)
+    end
+
+    return dates
   end
 end
