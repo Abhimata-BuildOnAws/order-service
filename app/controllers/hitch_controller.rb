@@ -52,7 +52,7 @@ class HitchController < ApplicationController
     render json: serializer.serializable_hash
   end
 
-  def emission_record_by_month_record
+  def emission_record_by_month
     month_range = params[:month_range].to_i
     user_id = params[:user_id]
 
