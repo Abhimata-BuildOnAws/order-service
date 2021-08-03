@@ -10,11 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_01_074204) do
+ActiveRecord::Schema.define(version: 2021_08_03_041227) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
+
+  create_table "emission_records", force: :cascade do |t|
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "month"
+    t.integer "carbon_emission"
+    t.integer "carbon_emission_saved"
+    t.integer "effective_carbon_emission"
+    t.integer "number_of_tumpang"
+    t.integer "average_carbon_emission"
+  end
 
   create_table "hitches", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.datetime "created_at", precision: 6, null: false
