@@ -10,6 +10,7 @@ Rails.application.routes.draw do
 
   # User
   post 'user/create', to: 'user#create'
+  post 'tumpang/user_stats', to: 'user#user_stats'
 
   # MenuItem
   post 'menu_item/create', to: 'menu_item#create'
