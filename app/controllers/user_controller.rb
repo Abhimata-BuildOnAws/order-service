@@ -9,7 +9,7 @@ class UserController < ApplicationController
     hitches = Hitch.where(user_id: params[:user_id])
     render json: {
       number_of_tumpangs: hitches.count,
-      number_of_deliviries: orders.count
+      number_of_deliveries: orders.count
     }, status: 200
   end
 end
