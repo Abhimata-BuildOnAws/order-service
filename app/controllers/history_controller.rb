@@ -1,4 +1,4 @@
-class EmissionController < ApplicationController
+class HistoryController < ApplicationController
   def emission_history
     month_range = params[:month_range].to_i
     user_id = params[:user_id]

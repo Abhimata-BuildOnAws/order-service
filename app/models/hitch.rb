@@ -33,6 +33,10 @@ class Hitch < ApplicationRecord
     self.total_pollution - each_pollution
   end
 
+  def geojson
+    OpenRoutesService.get_route('driving-car', restaurant.ors_coordinates, [longitude, latitude])
+  end
+  
   private
   def schedule_submit
     scheduler = Rufus::Scheduler.new

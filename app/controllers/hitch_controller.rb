@@ -41,6 +41,12 @@ class HitchController < ApplicationController
     render json: serializer.serializable_hash
   end
 
+  # Get route from restaurant to pickup for a tumpang
+  def route
+    hitch = Hitch.find(params[:hitch_id])
+    render json: hitch.geojson
+  end
+
   private
 
   # Retrieve current location of user
