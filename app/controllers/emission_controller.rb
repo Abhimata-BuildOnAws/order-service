@@ -6,7 +6,7 @@ class EmissionController < ApplicationController
 
     from_time = month_range.months.ago
     to_time = Time.now
-    hitches = Hitch.joins(:orders).where(orders: {user_id: user_id, created_at: from_time..to_time})
+    hitches = Hitch.joins(:orders).where(orders: {user_id: user_id}, hitches: {submit_time: from_time..to_time})
     monthly_emissions = []
     (dates).each do |date|
       monthly = monthly_emission(date, user_id, hitches)
@@ -17,6 +17,18 @@ class EmissionController < ApplicationController
 
     render json: { user_id: user_id, monthly_emissions: serializer.serializable_hash }, status: 200
     
+  end
+
+  def history_by_month_range
+    month_range = params[:month_range].to_i
+    user_id = params[:user_id]
+
+    from_time = month_range.months.ago
+    to_time = Time.now
+
+    hitches = Hitch.joins(:orders).where(orders: {user_id: user_id}, hitches: {submit_time: from_time..to_time})
+    serializer = HitchSerializer.new(hitches, { params: { user_latitude: params[:user_latitude], user_longitude: params[:user_longitude] } })
+    render json: serializer.serializable_hash
   end
 
   private
@@ -32,7 +44,7 @@ class EmissionController < ApplicationController
   end
 
   def monthly_emission(date, user_id, hitches)
-    hitches = hitches.where('extract(month from hitches.created_at) = ?', date.month)
+    hitches = hitches.where('extract(month from hitches.submit_time) = ?', date.month)
 
     emission_record = EmissionRecord.new()
     emission_record.month = date.strftime("%B")
