@@ -25,7 +25,7 @@ This microservice also communicates with two other services - User Service and R
 - ```AWS_REGION```
     - The configured AWS region in your instance
 - ```USER_SERVICE_ID```
-    - nil
+    - Id of user service in Route 53 Registry
 - ```OPEN_ROUTES_API_KEY```
     - The key to access Open Routes Service API
 - ```BING_MAPS_KEY```
@@ -58,7 +58,7 @@ BING_MAPS_KEY:
 1. Ensure you have docker installed on your machine
 2. Run these two commands
   ```sh
-  docker build -t restaurant-service .
-  docker run -p 3000:3000 restaurant-service
+  docker build -t order-service .
+  docker run -p 3000:3000 order-service
   ```
   Notice that you are listening on port 3000 and need to configure it yourself if you want to run the 3 microservices at the same time
