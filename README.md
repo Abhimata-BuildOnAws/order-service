@@ -17,13 +17,13 @@ This microservice also communicates with two other services - User Service and R
 - ```RDS_ENDPOINT```
     - Connection endpoint to connect to your postgres database
 - ```AWS_ACCESS_KEY```
-    - 
+    - nil
 - ```AWS_SECRET_KEY```
-    - 
+    - nil
 - ```AWS_REGION```
     - The configured AWS region in your instance
 - ```USER_SERVICE_ID```
-    - 
+    - nil
 - ```OPEN_ROUTES_API_KEY```
     - The key to access Open Routes Service API
 - ```BING_MAPS_KEY```
