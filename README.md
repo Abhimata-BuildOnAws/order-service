@@ -4,6 +4,8 @@
 Order Service allows users to browse tumpangs, and create order. It features functionality to let people hitch onto your deliver or to hitch on others' delivery.
 Features like Tumpang History is also available.
 
+Browsing tumpangs also features the functionality to calculate absolute distance and travel distance between the pick-up point and the restaurant. This is translated to pollution that could be emitted due to the delivery for a more informed decision by the user. 
+
 Having these done, order service keeps track of emission history that will be shown in the intervals of month.
 
 This microservice also communicates with two other services - User Service and Restaurant Service to do implicit updates needed.
@@ -52,3 +54,11 @@ BING_MAPS_KEY:
   ```sh
   rails db:create db:migrate
   ```
+## Running on your local machine
+1. Ensure you have docker installed on your machine
+2. Run these two commands
+  ```sh
+  docker build -t restaurant-service .
+  docker run -p 3000:3000 restaurant-service
+  ```
+  Notice that you are listening on port 3000 and need to configure it yourself if you want to run the 3 microservices at the same time
